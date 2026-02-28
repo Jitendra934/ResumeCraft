@@ -1,0 +1,47 @@
+<svg
+  width="250"
+  height="48"
+  viewBox="0 0 250 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <linearGradient id="craftGradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#4F46E5"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Icon (scaled to match text) -->
+  <!-- Resume page -->
+  <rect x="4" y="10" width="26" height="30" rx="5" fill="#FFFFFF"/>
+
+  <!-- Resume lines (original brand colors) -->
+  <rect x="8" y="18" width="18" height="3" rx="1.5" fill="#4F46E5"/>
+  <rect x="8" y="24" width="14" height="3" rx="1.5" fill="#6366F1"/>
+  <rect x="8" y="30" width="16" height="3" rx="1.5" fill="#818CF8"/>
+
+  <!-- resume -->
+  <text
+    x="40"
+    y="34"
+    font-size="32"
+    font-weight="500"
+    fill="#FFFFFF"
+    font-family="Poppins, Inter, system-ui, sans-serif"
+  >
+    resume
+  </text>
+
+  <!-- Craft -->
+  <text
+    x="148"
+    y="34"
+    font-size="32"
+    font-weight="700"
+    fill="url(#craftGradient)"
+    font-family="Poppins, Inter, system-ui, sans-serif"
+  >
+    Craft
+  </text>
+</svg>
