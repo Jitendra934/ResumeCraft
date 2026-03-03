@@ -25,41 +25,57 @@ const generateProjectBulletPoints = asyncHandler(async (req, res) => {
         }
 
         const prompt = `
-            You are a professional resume writer.
+            You are an expert technical resume writer specializing in ATS-optimized project descriptions.
 
-            Task:
-            
-            Rewrite and enhance the following project description into EXACTLY 4 resume bullet points.
-            Input:
+            OBJECTIVE:
+            Rewrite and enhance the provided project information into EXACTLY 4 strong, impact-driven resume bullet points.
+
+            INPUT:
             Project Title: ${projectTitle}
             Tech Stack: ${techStack.join(", ")}
 
-            STRICT OUTPUT RULES:
-            - Return ONLY bullet points
+            CRITICAL CONTENT RULES:
+            - Use ONLY verifiable project information provided elsewhere in context
+            - Do NOT invent new features, metrics, tools, integrations, or outcomes
+            - Do NOT assume scale, users, performance improvements, or business impact unless explicitly stated
+            - Do NOT repeat the project title or tech stack in the bullets
+            - Maintain technical accuracy and realistic tone
+
+            IMPACT STRUCTURE REQUIREMENT:
+            Each bullet MUST clearly include:
+            1) WHAT was implemented or built
+            2) HOW it was implemented (architecture, logic, tools, approach — if known)
+            3) WHY it mattered or the functional impact (only if explicitly supported)
+
+            If impact is not explicitly available, describe purpose or functional significance without fabricating results.
+
+            FORMAT RULES:
+            - Return ONLY Bullet Points
+            - Generate EXACTLY 4 bullet points
+            - Each bullet must be one complete sentence
+            - Each bullet must start with a strong action verb
+            - One bullet per line
+            - Return ONLY the bullet lines
             - NO markdown
-            - NO bold (**)
+            - NO bold
             - NO headings
             - NO labels
-            - NO symbols (*, -, •)
             - NO emojis
             - NO first-person pronouns
-            - Do NOT repeat project title or tech stack
-            - Do NOT add new features or assumptions
-            - Use strong action verbs
-            - One bullet per line
-            - ATS-friendly language
-            - Concise and professional
-
-            FORMAT ENFORCEMENT:
-            - Each bullet must be a single complete sentence
-            - No prefixes, suffixes, or decorative characters
+            - NO decorative symbols (*, -, •)
             - No blank lines before or after output
+            - No extra commentary
 
-            FAILURE HANDLING:
-            If any rule above is violated, regenerate the response silently and correct all issues.
+            QUALITY STANDARDS:
+            - Use ATS-friendly language
+            - Avoid vague phrases such as "worked on" or "responsible for"
+            - Keep bullets concise but technically meaningful
+            - Avoid repetition across bullets
+            - Strengthen weak wording without expanding scope
+            - If any rule is violated, regenerate internally and correct before output
 
-            Now output the 4 resume bullet points.
-            `;
+            Now output the 4 enhanced resume bullet points.
+        `;
 
         const result = await geminiModel.generateContent(prompt);
         const bullets = normalizeBulletPoints(result.response.text());
@@ -226,39 +242,42 @@ const enhanceProjectDescription = asyncHandler(async (req, res) => {
         }
 
         const prompt = `
-            You are a professional resume writer.
+            You are an expert technical resume writer specializing in ATS-optimized resumes.
 
-            Task:
-            
-            Rewrite and enhance the following project description into EXACTLY 5 resume bullet points.
-            Input:
+            Objective:
+            Rewrite and professionally enhance the provided project description into concise, impactful resume bullet points.
+
+            INPUT:
             Project Title: ${projectTitle}
             Tech Stack: ${techStack.join(", ")}
-            Existing Description:${description}
+            Existing Description:
+            ${description}
 
-            STRICT OUTPUT RULES:
+            CRITICAL INSTRUCTIONS:
             - Return ONLY bullet points
-            - NO markdown
-            - NO bold (**)
-            - NO headings
-            - NO labels
-            - NO symbols (*, -, •)
-            - NO emojis
-            - NO first-person pronouns
-            - Do NOT repeat project title or tech stack
-            - Do NOT add new features or assumptions
-            - Use strong action verbs
+            - Use ONLY the information explicitly provided in "Existing Description"
+            - DO NOT add new features, technologies, metrics, or assumptions
+            - DO NOT infer functionality that is not clearly mentioned
+            - If information is vague, improve wording without expanding scope
+            - Do NOT repeat the project title or tech stack
+            - Do NOT use first-person pronouns
+            - Do NOT include headings, labels, markdown, symbols, or emojis
+            - Output must contain ONLY bullet sentences
             - One bullet per line
-            - ATS-friendly language
-            - Concise and professional
+            - Each bullet must begin with a strong action verb
+            - Focus on implementation details, technical contributions, and outcomes
+            - Keep language ATS-friendly, concise, and professional
+            - Avoid generic phrases like "worked on" or "responsible for"
 
-            FORMAT RULES:
-            - One bullet per line
-            - Bullets must describe accomplishments and implementations only
-            - - If any rule is violated, regenerate silently and fix it.
+            QUALITY RULES:
+            - Improve clarity and technical depth without changing meaning
+            - Convert weak descriptions into strong accomplishment-driven statements
+            - Keep sentences direct and impact-oriented
+            - Remove redundancy
+            - If any rule is violated, regenerate internally and fix before outputting
 
-            Now generate the enhanced bullet points.
-            `;
+            Now generate the improved resume bullet points.
+        `;
 
         const result = await geminiModel.generateContent(prompt);
         const bullets = normalizeBulletPoints(result.response.text());
@@ -289,39 +308,48 @@ const enhanceExperienceDescription = asyncHandler(async (req, res) => {
         }
 
         const prompt = `
-            You are a professional resume writer and ATS optimization expert.
+            You are an expert technical resume writer and ATS optimization specialist.
 
-            Task:
-            Rewrite and enhance the following work experience description for a resume.
+            OBJECTIVE:
+            Rewrite and professionally enhance the provided work experience into strong, impact-driven resume bullet points.
 
+            INPUT:
             Job Title:
             ${jobTitle}
 
             Existing Description:
             ${jobDescription}
 
-            Output Requirements:
+            CRITICAL RULES:
+            - Return ONLY bullet points
+            - Use ONLY the information explicitly provided in "Existing Description"
+            - Do NOT invent metrics, results, tools, or responsibilities
+            - Do NOT assume impact if not clearly stated
+            - If impact is unclear, improve clarity without expanding scope
             - Generate exactly 5 bullet points
-            - Each bullet must start with a strong action verb
-            - Focus on impact, responsibilities, and results (only if explicitly mentioned)
-            - Keep language professional and concise
-            - Use ATS-friendly keywords where relevant
+            - Each bullet must begin with a strong action verb
+            - Each bullet must be one complete sentence
+            - Focus on responsibilities, implementations, and measurable outcomes (only if explicitly mentioned)
+            - Avoid vague phrases such as "worked on", "helped with", or "responsible for"
             - Do NOT use first-person pronouns (I, me, my, we)
-            - Do NOT add emojis, numbering, or headings
-            - Do NOT invent or assume missing information
-            - Avoid filler words and vague phrases
-            - Each bullet should be one sentence only
+            - Do NOT add emojis, numbering, headings, or extra commentary
+            - Keep language concise, professional, and ATS-friendly
+            - Avoid repetition across bullets
 
-            QUALITY REQUIREMENTS:
-            - Each bullet should explain WHAT was done and WHY it mattered
-            - Include scope, purpose, or outcome where possible
-            - Aim for medium-length bullets (1-2 lines on a resume)
-            - Prefer clarity and professionalism over brevity
+            QUALITY ENFORCEMENT:
+            - Each bullet must clearly state WHAT was done
+            - If explicitly available, include WHY it mattered or the outcome
+            - Maintain realistic, non-exaggerated tone
+            - Strengthen weak wording without changing meaning
+            - Keep bullets medium-length (1–2 resume lines)
+            - If any rule is violated, regenerate internally and correct before output
 
-            Formatting Rules:
-            - Return only the bullet points
-            - Use "-" (hyphen) for each bullet
-            - No extra text before or after the bullets
+            FORMAT:
+            - Return ONLY the bullet points
+            - Use "-" (hyphen) at the start of each bullet
+            - No text before or after the bullets
+
+            Now generate the improved resume bullet points.
         `;
 
         const result = await geminiModel.generateContent(prompt);
@@ -352,20 +380,51 @@ const enhanceAboutMe = asyncHandler(async (req, res) => {
         }
 
         const prompt = `
-            Rewrite and enhance the following about me for a resume
-            About me: ${data.aboutMe}
-            Skills: ${data.skills}
-            Education: ${data.education}
-        
-            Rules:
-            - 2-3 lines
-            - Professional, confident, and realistic (no exaggeration)
-            - Suitable for a fresher / student profile
-            - No first-person pronouns (no "I", "my", "me")
-            - No emojis or casual language
+            You are an expert resume writer specializing in entry-level and fresher profiles.
 
-            - Focus on strengths, learning mindset, and career readiness
-            - Output only one polished final version (no alternatives, no explanations)
+            OBJECTIVE:
+            Rewrite and professionally enhance the provided "About Me" section into a polished resume summary.
+
+            INPUT:
+            About Me:
+            ${data.aboutMe}
+
+            Skills:
+            ${data.skills}
+
+            Education:
+            ${data.education}
+
+            CRITICAL RULES:
+            - Use ONLY the information explicitly provided
+            - Do NOT invent achievements, tools, certifications, or experience
+            - Do NOT assume professional experience if not clearly mentioned
+            - Do NOT exaggerate skills or impact
+            - Keep the summary suitable for a fresher / student profile
+            - Maintain a confident but realistic tone
+            - Do NOT use first-person pronouns (I, me, my, we)
+            - Do NOT use emojis, casual language, or buzzwords
+            - Avoid generic phrases such as "hardworking individual" or "passionate about everything"
+            - Do NOT repeat information unnecessarily
+
+            STRUCTURE REQUIREMENTS:
+            - 2-3 concise lines
+            - Write as a professional resume summary (not paragraphs with extra spacing)
+            - Focus on core strengths, technical foundation, learning mindset, and career readiness
+            - Incorporate relevant skills naturally without listing them
+            - Keep language ATS-friendly and clean
+
+            OUTPUT RULES:
+            - Return ONLY one final polished version
+            - No headings
+            - No labels
+            - No explanations
+            - No multiple options
+            - No extra text before or after
+
+            If any rule is violated, regenerate internally and correct before output.
+
+            Now generate the enhanced professional summary.
         `;
 
         const result = await geminiModel.generateContent(prompt);

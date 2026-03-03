@@ -181,7 +181,7 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col sm:flex-row items-center gap-6 text-sm md:text-base/6 text-slate-200">
+        <div className="mt-10 pl-6 flex flex-col sm:flex-row items-center gap-6 text-sm md:text-base/6 text-slate-200">
           <span className="flex items-center gap-2">Ready in 5 minutes</span>
 
           <span className="hidden sm:block w-px h-4 bg-slate-300"></span>

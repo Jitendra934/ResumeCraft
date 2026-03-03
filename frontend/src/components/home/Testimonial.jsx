@@ -19,7 +19,7 @@ const Testimonial = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 mx-10">
         <div className="border border-slate-200 p-6 rounded-lg hover:-translate-y-1 hover:shadow-xl hover:border-transparent transition duration-500">
           <p className="text-base text-slate-500">
-            Radiant made undercutting all of our competitors an absolute breeze.
+            ResumeCraft made building a professional resume effortless. The AI suggestions improved clarity, structure, and impact without sounding generic.
           </p>
           <div className="flex items-center gap-3 mt-8">
             <img
@@ -32,15 +32,13 @@ const Testimonial = () => {
                 Richard Nelson
                 <BadgeCheck className="w-4 h-4 text-blue-500 " />
               </h2>
-              <p className="text-gray-500">CTO, Slack</p>
             </div>
           </div>
         </div>
 
         <div className="border border-slate-200 p-6 rounded-lg hover:-translate-y-1 hover:shadow-xl hover:border-transparent transition duration-500">
           <p className="text-base text-slate-500">
-            This platform helped us launch our product twice as fast as
-            expected.
+            An intuitive and efficient tool for students and freshers. ResumeCraft helps convert academic and project work into strong, job-ready resume content.
           </p>
           <div className="flex items-center gap-3 mt-8">
             <img
@@ -53,14 +51,13 @@ const Testimonial = () => {
                 Mitchel Johnson
                 <BadgeCheck className="w-4 h-4 text-blue-500 " />
               </h2>
-              <p className="text-gray-500">Product Manager</p>
             </div>
           </div>
         </div>
 
         <div className="border border-slate-200 p-6 rounded-lg hover:-translate-y-1 hover:shadow-xl hover:border-transparent transition duration-500">
           <p className="text-base text-slate-500">
-            Incredible support and a fantastic experience from start to finish.
+            The project and experience enhancement feature significantly improved resume quality. The formatting and wording feel tailored for real job applications.
           </p>
           <div className="flex items-center gap-3 mt-8">
             <img
@@ -73,15 +70,13 @@ const Testimonial = () => {
                 Liam Carter
                 <BadgeCheck className="w-4 h-4 text-blue-500 " />
               </h2>
-              <p className="text-gray-500">CEO, BrightTech</p>
             </div>
           </div>
         </div>
 
         <div className="border border-slate-200 p-6 rounded-lg hover:-translate-y-1 hover:shadow-xl hover:border-transparent transition duration-500">
           <p className="text-base text-slate-500">
-            Our team’s productivity skyrocketed after switching to this
-            solution.
+            ResumeCraft simplified the entire resume-building process. The guided sections and intelligent rewriting made the content more impactful and concise.
           </p>
           <div className="flex items-center gap-3 mt-8">
             <img
@@ -94,14 +89,13 @@ const Testimonial = () => {
                 Sophia Lee
                 <BadgeCheck className="w-4 h-4 text-blue-500" />
               </h2>
-              <p className="text-gray-500">Engineering Lead</p>
             </div>
           </div>
         </div>
 
         <div className="border border-slate-200 p-6 rounded-lg hover:-translate-y-1 hover:shadow-xl hover:border-transparent transition duration-500">
           <p className="text-base text-slate-500">
-            A seamless integration that saved us countless developer hours.
+            The AI-powered recommendations helped highlight strengths and technical skills more confidently. The final resume looked clean and professionally structured.
           </p>
           <div className="flex items-center gap-3 mt-8">
             <img
@@ -114,14 +108,13 @@ const Testimonial = () => {
                 Noah Patel
                 <BadgeCheck className="w-4 h-4 text-blue-500" />
               </h2>
-              <p className="text-gray-500">CTO, DevWorks</p>
             </div>
           </div>
         </div>
 
         <div className="border border-slate-200 p-6 rounded-lg hover:-translate-y-1 hover:shadow-xl hover:border-transparent transition duration-500">
           <p className="text-base text-slate-500">
-            The user experience is outstanding and setup was a breeze.
+            The platform transformed a basic draft into a polished, ATS-friendly resume within minutes. The bullet enhancement feature is incredibly effective.
           </p>
           <div className="flex items-center gap-3 mt-8">
             <img
@@ -134,7 +127,6 @@ const Testimonial = () => {
                 Oliver Brooks
                 <BadgeCheck className="w-4 h-4 text-blue-500" />
               </h2>
-              <p className="text-gray-500">Marketing Director</p>
             </div>
           </div>
         </div>

@@ -24,7 +24,7 @@ const App = () => {
         // console.log(data.data);
 
         if(data.data) {
-          dispatch(login({token, user: data.data}))
+          dispatch(login({ user: data.data, token }))
         }
         dispatch(setLoading(false));
       }

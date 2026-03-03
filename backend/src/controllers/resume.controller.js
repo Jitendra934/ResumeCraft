@@ -8,99 +8,99 @@ import imagekit from "../utils/imagekit.js";
 
 
 const createResume = asyncHandler(async (req, res) => {
-    const { title } = req.body;
+  const { title } = req.body;
 
-    if (!title) {
-        throw new ApiError(400, "Title is required for resume")
-    }
-    if (title.trim() === "") {
-        throw new ApiError(400, "Title is required for resume")
-    }
+  if (!title) {
+    throw new ApiError(400, "Title is required for resume")
+  }
+  if (title.trim() === "") {
+    throw new ApiError(400, "Title is required for resume")
+  }
 
-    const resume = await Resume.create({
-        owner: req.user?._id,
-        title,
-    });
+  const resume = await Resume.create({
+    owner: req.user?._id,
+    title,
+  });
 
-    const createdResume = await Resume.findById(resume?._id)
-        .populate("owner", "fullName email")
+  const createdResume = await Resume.findById(resume?._id)
+    .populate("owner", "fullName email")
 
-    return res
-        .status(201)
-        .json(
-            new ApiResponse(
-                201,
-                createdResume,
-                "Resume created successfully"
-            )
-        )
+  return res
+    .status(201)
+    .json(
+      new ApiResponse(
+        201,
+        createdResume,
+        "Resume created successfully"
+      )
+    )
 })
 
 const getResumeById = asyncHandler(async (req, res) => {
-    const { resumeId } = req.params;
+  const { resumeId } = req.params;
 
-    if (!isValidObjectId(resumeId)) {
-        throw new ApiError(400, "Invalid resume Id")
-    }
+  if (!isValidObjectId(resumeId)) {
+    throw new ApiError(400, "Invalid resume Id")
+  }
 
-    const resume = await Resume.findById(resumeId);
+  const resume = await Resume.findById(resumeId);
 
-    if (!resume) {
-        throw new ApiError(404, "Resume not found")
-    }
-    return res
-        .status(200)
-        .json(
-            new ApiResponse(
-                200,
-                resume,
-                "Resume fetched successfully"
-            )
-        )
+  if (!resume) {
+    throw new ApiError(404, "Resume not found")
+  }
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        resume,
+        "Resume fetched successfully"
+      )
+    )
 })
 
 const getAllResumesByUser = asyncHandler(async (req, res) => {
-    const resumes = await Resume.find({ owner: req.user?._id });
+  const resumes = await Resume.find({ owner: req.user?._id });
 
-    if (!resumes) {
-        throw new ApiError(404, "No resumes found")
-    }
+  if (!resumes) {
+    throw new ApiError(404, "No resumes found")
+  }
 
-    return res
-        .status(200)
-        .json(
-            new ApiResponse(
-                200,
-                resumes,
-                "User resumes fetched successfully"
-            )
-        )
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        resumes,
+        "User resumes fetched successfully"
+      )
+    )
 })
 
 const deleteResume = asyncHandler(async (req, res) => {
-    const { resumeId } = req.params;
+  const { resumeId } = req.params;
 
-    if (!isValidObjectId(resumeId)) {
-        throw new ApiError(400, "Invalid resume Id")
-    }
+  if (!isValidObjectId(resumeId)) {
+    throw new ApiError(400, "Invalid resume Id")
+  }
 
-    const resume = await Resume.exists({ _id: resumeId });
+  const resume = await Resume.exists({ _id: resumeId });
 
-    if (!resume) {
-        throw new ApiError(400, "Resume not found")
-    }
+  if (!resume) {
+    throw new ApiError(400, "Resume not found")
+  }
 
-    await Resume.findByIdAndDelete(resumeId);
+  await Resume.findByIdAndDelete(resumeId);
 
-    return res
-        .status(200)
-        .json(
-            new ApiResponse(
-                200,
-                {},
-                "Resume deleted successfully"
-            )
-        )
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        {},
+        "Resume deleted successfully"
+      )
+    )
 })
 
 const updateResume = asyncHandler(async (req, res) => {
@@ -108,7 +108,14 @@ const updateResume = asyncHandler(async (req, res) => {
   const { resumeId, removeBackground } = req.body;
 
   // Parse resumeData (FormData sends strings)
-  const resumeData = JSON.parse(req.body.resumeData);
+  let resumeData = {};
+
+  if (req.body.resumeData) {
+    resumeData =
+      typeof req.body.resumeData === "string"
+        ? JSON.parse(req.body.resumeData)
+        : req.body.resumeData;
+  }
 
   const resume = await Resume.findOne({
     _id: resumeId,
@@ -137,7 +144,7 @@ const updateResume = asyncHandler(async (req, res) => {
     updateData.personalInfo.image = response.url;
   }
 
-  
+
   if (resumeData.title) updateData.title = resumeData.title;
   if (resumeData.aboutMe?.trim()) updateData.aboutMe = resumeData.aboutMe;
   if (resumeData.template) updateData.template = resumeData.template;
@@ -201,9 +208,9 @@ const updateResume = asyncHandler(async (req, res) => {
 
 
 export {
-    createResume,
-    getResumeById,
-    deleteResume,
-    updateResume,
-    getAllResumesByUser,
+  createResume,
+  getResumeById,
+  deleteResume,
+  updateResume,
+  getAllResumesByUser,
 }
