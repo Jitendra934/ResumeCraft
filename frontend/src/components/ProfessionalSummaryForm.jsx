@@ -22,6 +22,12 @@ const ProfessionalSummaryForm = ({ resumeData, onChange, setResumeData }) => {
     } catch (error) {
       // console.log("AXIOS ERROR:", error);
       // console.log("RESPONSE:", error?.response);
+      if (error?.response?.status === 429) {
+        toast.error(
+          "AI request limit reached. Please wait 15 minutes and try again.",
+        );
+        return;
+      }
       toast.error(
         error?.response?.data?.message ||
           error?.response?.data ||
@@ -42,6 +48,12 @@ const ProfessionalSummaryForm = ({ resumeData, onChange, setResumeData }) => {
     } catch (error) {
       // console.log("AXIOS ERROR:", error);
       // console.log("RESPONSE:", error?.response);
+      if (error?.response?.status === 429) {
+        toast.error(
+          "AI request limit reached. Please wait 15 minutes and try again.",
+        );
+        return;
+      }
       toast.error(
         error?.response?.data?.message ||
           error?.response?.data ||
@@ -63,7 +75,7 @@ const ProfessionalSummaryForm = ({ resumeData, onChange, setResumeData }) => {
         </div>
         <div className="flex items-center gap-2">
           <button
-            disabled={isGenerating}
+            disabled={isGenerating || isEnhancing}
             onClick={generateSummary}
             className="flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50"
           >
@@ -75,7 +87,7 @@ const ProfessionalSummaryForm = ({ resumeData, onChange, setResumeData }) => {
             {isGenerating ? "Generating..." : "AI Generate"}
           </button>
           <button
-            disabled={isEnhancing}
+            disabled={isEnhancing || isGenerating}
             onClick={enhanceSummary}
             className="flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50"
           >

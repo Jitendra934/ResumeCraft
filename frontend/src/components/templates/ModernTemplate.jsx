@@ -103,9 +103,13 @@ const ModernTemplate = ({ data, accentColor }) => {
                     </div>
                   </div>
                   {exp.jobDescription && (
-                    <div className="text-gray-700 ml-2 leading-relaxed text-sm whitespace-pre-line">
-                      {exp.jobDescription}
-                    </div>
+                    <ul className="list-disc list-inside text-sm text-gray-700 leading-relaxed">
+                      {exp.jobDescription.map((bullet, i) => (
+                        <li key={i} className="marker:text-gray-500">
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
                   )}
                 </div>
               ))}
@@ -147,9 +151,13 @@ const ModernTemplate = ({ data, accentColor }) => {
                     </div>
                   </div>
                   {p.description && (
-                    <div className="text-gray-700 ml-2 leading-relaxed text-sm whitespace-pre-line">
-                      {p.description}
-                    </div>
+                    <ul className="list-disc list-inside text-sm text-gray-700 leading-relaxed">
+                      {p.description.map((bullet, i) => (
+                        <li key={i} className="marker:text-gray-500">
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
                   )}
                 </div>
               ))}
@@ -173,7 +181,9 @@ const ModernTemplate = ({ data, accentColor }) => {
                     </h3>
                     <p style={{ color: accentColor }}>{edu.instituteName}</p>
                     <div className="flex justify-between items-center text-sm text-gray-600">
-                      <span>{(edu.startYear)} -{" "}{(edu.graduationYear)}</span>
+                      <span>
+                        {edu.startYear} - {edu.graduationYear}
+                      </span>
                       {edu.gpa && <span>GPA / Percentage: {edu.gpa}</span>}
                     </div>
                   </div>

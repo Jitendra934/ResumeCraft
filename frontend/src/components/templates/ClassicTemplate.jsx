@@ -112,9 +112,13 @@ const ClassicTemplate = ({ data, accentColor }) => {
                   </div>
                 </div>
                 {exp.jobDescription && (
-                  <div className="text-gray-700 text-sm ml-2 leading-relaxed whitespace-pre-line">
-                    {exp.jobDescription}
-                  </div>
+                  <ul className="list-disc list-inside  text-sm text-gray-700 leading-relaxed">
+                      {exp.jobDescription.map((bullet, i) => (
+                        <li key={i} className="marker:text-gray-500">
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
                 )}
               </div>
             ))}
@@ -155,9 +159,13 @@ const ClassicTemplate = ({ data, accentColor }) => {
                     )}
                   </p>
                   {proj.description && (
-                    <div className="text-gray-700 text-sm ml-2 leading-relaxed whitespace-pre-line">
-                      {proj.description}
-                    </div>
+                    <ul className="list-disc list-inside  text-sm text-gray-700 leading-relaxed">
+                      {proj.description.map((bullet, i) => (
+                        <li key={i} className="marker:text-gray-500">
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
                   )}
                 </div>
               </div>

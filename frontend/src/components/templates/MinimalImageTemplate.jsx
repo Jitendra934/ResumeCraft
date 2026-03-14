@@ -13,7 +13,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
   return (
     <div className="max-w-5xl mx-auto bg-white text-zinc-800">
       <div className="grid grid-cols-3">
-        <div className="col-span-1  py-10">
+        <div className="col-span-1  py-6">
           {/* Image */}
           {data.personalInfo?.image &&
           typeof data.personalInfo.image === "string" ? (
@@ -38,7 +38,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
         </div>
 
         {/* Name */}
-        <div className="col-span-2 flex flex-col justify-center py-10 px-8">
+        <div className="col-span-2 flex flex-col justify-center py-6 px-8">
           <h1 className="text-4xl font-bold text-zinc-700 tracking-widest">
             {data.personalInfo?.fullName || "Your Name"}
           </h1>
@@ -77,7 +77,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
               )}
               {data.personalInfo?.linkedInUrl && (
                 <div className="flex items-center gap-2">
-                  <Linkedin className="size-4" style={{ color: accentColor }}/>
+                  <Linkedin className="size-4" style={{ color: accentColor }} />
                   {data.personalInfo.linkedInUrl && (
                     <a
                       href={data.personalInfo.linkedInUrl}
@@ -170,8 +170,12 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                       {exp.name}
                     </p>
                     {exp.jobDescription && (
-                      <ul className="ml-2 text-sm text-zinc-700 leading-relaxed space-y-1 whitespace-pre-line">
-                        {exp.jobDescription}
+                      <ul className="list-disc list-inside text-sm text-gray-700 leading-relaxed">
+                        {exp.jobDescription.map((bullet, i) => (
+                          <li key={i} className="marker:text-gray-500">
+                            {bullet}
+                          </li>
+                        ))}
                       </ul>
                     )}
                   </div>
@@ -195,7 +199,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     <h3 className="text-md font-medium text-zinc-800 mt-3">
                       {project.projectTitle}
                     </h3>
-                    <p className="text-sm mb-1" >
+                    <p className="text-sm mb-1">
                       {project.projectLink && (
                         <a
                           href={project.projectLink}
@@ -208,8 +212,12 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                       )}
                     </p>
                     {project.description && (
-                      <ul className="ml-2 text-sm text-zinc-700  space-y-1 whitespace-pre-line">
-                        {project.description}
+                      <ul className="list-disc list-inside text-sm text-gray-700 leading-relaxed">
+                        {project.description.map((bullet, i) => (
+                          <li key={i} className="marker:text-gray-500">
+                            {bullet}
+                          </li>
+                        ))}
                       </ul>
                     )}
                   </div>

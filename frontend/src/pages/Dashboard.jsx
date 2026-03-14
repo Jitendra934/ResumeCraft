@@ -69,8 +69,8 @@ const Dashboard = () => {
       setShowUploadResume(false);
       navigate(`/app/builder/${data.data._id}`);
     } catch (error) {
-      // console.log("AXIOS ERROR:", error);
-      // console.log("RESPONSE:", error?.response);
+       console.log("AXIOS ERROR:", error);
+       console.log("RESPONSE:", error?.response);
       toast.error(
         error?.response?.data?.message ||
           error?.response?.data ||
@@ -373,7 +373,7 @@ const Dashboard = () => {
                       <div className="flex items-center justify-between bg-indigo-50 border border-indigo-200 rounded-lg px-4 py-3">
                         <div className="flex items-center gap-3">
                           <FileTextIcon className="size-5 text-indigo-600" />
-                          <p className="text-sm text-indigo-700 truncate max-w-[180px]">
+                          <p className="text-sm text-indigo-700 truncate max-w-45">
                             {resume.name}
                           </p>
                         </div>
@@ -405,7 +405,7 @@ const Dashboard = () => {
               {/* Submit Button */}
               <button
                 disabled={isLoading || !resume}
-                className="w-full py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg flex justify-center items-center gap-2 hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-2 bg-linear-to-r from-indigo-600 to-purple-600 text-white rounded-lg flex justify-center items-center gap-2 hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading && (
                   <LoaderCircleIcon className="size-4 animate-spin" />

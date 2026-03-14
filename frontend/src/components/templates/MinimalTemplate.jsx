@@ -53,7 +53,9 @@ const MinimalTemplate = ({ data, accentColor }) => {
           >
             Professional Summary
           </h2>
-          <p className=" text-gray-700 text-sm text-justify whitespace-pre-line">{data.aboutMe}</p>
+          <p className=" text-gray-700 text-sm text-justify whitespace-pre-line">
+            {data.aboutMe}
+          </p>
         </section>
       )}
 
@@ -79,9 +81,13 @@ const MinimalTemplate = ({ data, accentColor }) => {
                 </div>
                 <p className="text-gray-600">{exp.name}</p>
                 {exp.jobDescription && (
-                  <div className="text-gray-700 text-sm leading-relaxed whitespace-pre-line">
-                    {exp.jobDescription}
-                  </div>
+                  <ul className="list-disc list-inside  text-sm text-gray-700 leading-relaxed">
+                    {exp.jobDescription.map((bullet, i) => (
+                      <li key={i} className="marker:text-gray-500">
+                        {bullet}
+                      </li>
+                    ))}
+                  </ul>
                 )}
               </div>
             ))}
@@ -101,24 +107,29 @@ const MinimalTemplate = ({ data, accentColor }) => {
 
           <div className="space-y-2">
             {data.projects.map((proj, index) => (
-              <div
-                key={index}
-                className="flex flex-col gap-1 justify-between items-baseline"
-              >
-                <h3 className="text-lg font-medium ">{proj.projectTitle}</h3>
-                <p>
+              <div key={index} className="flex flex-col gap-1">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-medium">{proj.projectTitle}</h3>
+
                   {proj.projectLink && (
                     <a
                       href={proj.projectLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className=" hover:underline text-sm"
+                      className="text-sm hover:underline"
                     >
-                      Live Demo / Link
+                      Live Demo
                     </a>
                   )}
-                </p>
-                <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">{proj.description}</p>
+                </div>
+
+                <ul className="list-disc list-inside text-sm text-gray-700 leading-relaxed space-y-1">
+                  {proj.description.map((bullet, i) => (
+                    <li key={i} className="marker:text-gray-500">
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
@@ -151,7 +162,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
                   )}
                 </div>
                 <span className="text-right text-sm text-gray-500">
-                  {(edu.startYear)} -{" "}{(edu.graduationYear)}
+                  {edu.startYear} - {edu.graduationYear}
                 </span>
               </div>
             ))}

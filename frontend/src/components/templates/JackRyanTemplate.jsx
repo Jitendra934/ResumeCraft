@@ -11,7 +11,6 @@ const JackRyanTemplate = ({ data, accentColor }) => {
     });
   };
 
-
   return (
     <div className="max-w-4xl mx-auto p-5 bg-white text-gray-900 font-sans">
       {/* Header */}
@@ -74,7 +73,7 @@ const JackRyanTemplate = ({ data, accentColor }) => {
       {data.aboutMe && (
         <section className="mb-3">
           <h2
-            className="text-lg font-bold border-b-2 mb-2 uppercase tracking-wider"
+            className="text-lg font-bold border-b-2 mb-1 uppercase tracking-wider"
             style={{ borderColor: "#d1d5db", color: accentColor || "#111827" }}
           >
             Professional Summary
@@ -89,7 +88,7 @@ const JackRyanTemplate = ({ data, accentColor }) => {
       {data.education && data.education.length > 0 && (
         <section className="mb-3">
           <h2
-            className="text-lg font-bold border-b-2 mb-2 uppercase tracking-wider"
+            className="text-lg font-bold border-b-2 mb-1 uppercase tracking-wider"
             style={{ borderColor: "#d1d5db", color: accentColor || "#111827" }}
           >
             Education
@@ -124,7 +123,7 @@ const JackRyanTemplate = ({ data, accentColor }) => {
       {data.experience && data.experience.length > 0 && (
         <section className="mb-3">
           <h2
-            className="text-lg font-bold border-b-2 mb-2 uppercase tracking-wider"
+            className="text-lg font-bold border-b-2 mb-1 uppercase tracking-wider"
             style={{ borderColor: "#d1d5db", color: accentColor || "#111827" }}
           >
             Experience
@@ -142,9 +141,13 @@ const JackRyanTemplate = ({ data, accentColor }) => {
                 <p className="text-sm italic text-gray-800 mb-1">{exp.name}</p>
                 {/* Replaced whitespace-pre-line div with the custom renderer */}
                 {exp.jobDescription && (
-                  <div className="text-gray-700 text-sm ml-2 leading-relaxed whitespace-pre-line">
-                    {exp.jobDescription}
-                  </div>
+                  <ul className="list-disc list-inside  mt-1 space-y-1 text-sm text-gray-700 leading-relaxed">
+                    {exp.jobDescription.map((bullet, i) => (
+                      <li key={i} className="marker:text-gray-500">
+                        {bullet}
+                      </li>
+                    ))}
+                  </ul>
                 )}
               </div>
             ))}
@@ -156,7 +159,7 @@ const JackRyanTemplate = ({ data, accentColor }) => {
       {data.projects && data.projects.length > 0 && (
         <section className="mb-3">
           <h2
-            className="text-lg font-bold border-b-2 mb-2 uppercase tracking-wider"
+            className="text-lg font-bold border-b-2 mb-1 uppercase tracking-wider"
             style={{ borderColor: "#d1d5db", color: accentColor || "#111827" }}
           >
             Projects
@@ -165,22 +168,33 @@ const JackRyanTemplate = ({ data, accentColor }) => {
             {data.projects.map((proj, index) => (
               <div key={index}>
                 <div className="flex justify-between items-baseline mb-0.5">
+                  <h3 className="font-bold text-[15px]">{proj.projectTitle}</h3>
                   {proj.projectLink && (
                     <a
                       href={proj.projectLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-semibold hover:underline"
-                      style={{ color: accentColor || "#2563eb" }}
+                      className="text-sm font-semibold hover:underline text-gray-500"
                     >
                       Live Demo / Link
                     </a>
                   )}
-                  <h3 className="font-bold text-[15px]">{proj.projectTitle}</h3>
                 </div>
                 {proj.description && (
-                  <div className="text-gray-700 text-sm ml-2 leading-relaxed whitespace-pre-line">
-                    {proj.description}
+                  <ul className="list-disc list-inside  text-sm text-gray-700 leading-relaxed">
+                    {proj.description.map((bullet, i) => (
+                      <li key={i} className="marker:text-gray-500">
+                        {bullet}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {proj.techStack && (
+                  <div className="text-xs text-gray-600 mt-1 ml-2">
+                    <span className="font-semibold text-gray-700">
+                      Keywords:
+                    </span>{" "}
+                    {proj.techStack}
                   </div>
                 )}
               </div>
@@ -193,7 +207,7 @@ const JackRyanTemplate = ({ data, accentColor }) => {
       {data.skills && data.skills.length > 0 && (
         <section>
           <h2
-            className="text-lg font-bold border-b-2 mb-2 uppercase tracking-wider"
+            className="text-lg font-bold border-b-2 mb-1 uppercase tracking-wider"
             style={{ borderColor: "#d1d5db", color: accentColor || "#111827" }}
           >
             Skills

@@ -15,8 +15,8 @@ import { useState } from "react";
 const ExperienceForm = ({ data, onChange }) => {
   const { token } = useSelector((state) => state.auth);
 
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [isEnhancing, setIsEnhancing] = useState(false);
+  const [generatingIndex, setGeneratingIndex] = useState(null);
+  const [enhancingIndex, setEnhancingIndex] = useState(null);
 
   const addExperience = () => {
     const newExperience = {
@@ -45,7 +45,7 @@ const ExperienceForm = ({ data, onChange }) => {
 
   const enhanceExperienceDescription = async (index) => {
     try {
-      setIsEnhancing(true);
+      setEnhancingIndex(index);
 
       const experience = data[index]; //get the particular experience
 
@@ -65,21 +65,27 @@ const ExperienceForm = ({ data, onChange }) => {
       );
       updateExperience(index, "jobDescription", response.data.data.join("\n"));
     } catch (error) {
-      console.log("AXIOS ERROR:", error);
-      console.log("RESPONSE:", error?.response);
+      if (error?.response?.status === 429) {
+        toast.error(
+          "AI request limit reached. Please wait 15 minutes and try again.",
+        );
+        return;
+      }
+      // console.log("AXIOS ERROR:", error);
+      // console.log("RESPONSE:", error?.response);
       toast.error(
         error?.response?.data?.message ||
           error?.response?.data ||
           error.message,
       );
     } finally {
-      setIsEnhancing(false);
+      setEnhancingIndex(null);
     }
   };
 
   const generateExperienceDescription = async (index) => {
     try {
-      setIsGenerating(true);
+      setGeneratingIndex(index);
       const experience = data[index]; //get the particular experience
 
       const payload = {
@@ -101,15 +107,21 @@ const ExperienceForm = ({ data, onChange }) => {
 
       updateExperience(index, "jobDescription", response.data.data.join("\n"));
     } catch (error) {
-      console.log("AXIOS ERROR:", error);
-      console.log("RESPONSE:", error?.response);
+      if (error?.response?.status === 429) {
+        toast.error(
+          "AI request limit reached. Please wait 15 minutes and try again.",
+        );
+        return;
+      }
+      // console.log("AXIOS ERROR:", error);
+      // console.log("RESPONSE:", error?.response);
       toast.error(
         error?.response?.data?.message ||
           error?.response?.data ||
           error.message,
       );
     } finally {
-      setIsGenerating(false);
+      setGeneratingIndex(null);
     }
   };
 
@@ -235,33 +247,33 @@ const ExperienceForm = ({ data, onChange }) => {
                   </label>
                   <div className="flex items-center gap-2">
                     <button
-                      disabled={isGenerating}
+                      disabled={generatingIndex === index || enhancingIndex === index}
                       onClick={() => generateExperienceDescription(index)}
                       className="flex items-center gap-1 px-2 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50"
                     >
-                      {isGenerating ? (
+                      {generatingIndex === index ? (
                         <Loader2 className=" size-4 animate-spin" />
                       ) : (
                         <WandSparkles className="size-4" />
                       )}
-                      {isGenerating ? "Generating..." : "AI Generate"}
+                      {generatingIndex === index ? "Generating..." : "AI Generate"}
                     </button>
                     <button
-                      disabled={isGenerating}
+                      disabled={enhancingIndex === index || generatingIndex === index}
                       onClick={() => enhanceExperienceDescription(index)}
                       className="flex items-center gap-1 px-2 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50"
                     >
-                      {isEnhancing ? (
+                      {enhancingIndex === index ? (
                         <Loader2 className=" size-4 animate-spin" />
                       ) : (
                         <Sparkles className="size-4" />
                       )}
-                      {isEnhancing ? "Enhancing..." : "AI Enhance"}
+                      {enhancingIndex === index ? "Enhancing..." : "AI Enhance"}
                     </button>
                   </div>
                 </div>
                 <textarea
-                  rows={4}
+                  rows={5}
                   className="w-full text-sm px-3 py-2 rounded-lg resize-none"
                   placeholder="Describe your key responsibilities and achievements..."
                   value={experience.jobDescription || ""}
