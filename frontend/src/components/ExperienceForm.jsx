@@ -63,7 +63,7 @@ const ExperienceForm = ({ data, onChange }) => {
           headers: { Authorization: token },
         },
       );
-      updateExperience(index, "jobDescription", response.data.data.join("\n"));
+      updateExperience(index, "jobDescription", response.data.data);
     } catch (error) {
       if (error?.response?.status === 429) {
         toast.error(
@@ -73,6 +73,10 @@ const ExperienceForm = ({ data, onChange }) => {
       }
       // console.log("AXIOS ERROR:", error);
       // console.log("RESPONSE:", error?.response);
+      if (error?.response?.status === 503) {
+        toast.error("AI is busy right now. Please retry in a few seconds.");
+        return;
+      }
       toast.error(
         error?.response?.data?.message ||
           error?.response?.data ||
@@ -105,7 +109,7 @@ const ExperienceForm = ({ data, onChange }) => {
         },
       );
 
-      updateExperience(index, "jobDescription", response.data.data.join("\n"));
+      updateExperience(index, "jobDescription", response.data.data);
     } catch (error) {
       if (error?.response?.status === 429) {
         toast.error(
@@ -115,6 +119,10 @@ const ExperienceForm = ({ data, onChange }) => {
       }
       // console.log("AXIOS ERROR:", error);
       // console.log("RESPONSE:", error?.response);
+      if (error?.response?.status === 503) {
+        toast.error("AI is busy right now. Please retry in a few seconds.");
+        return;
+      }
       toast.error(
         error?.response?.data?.message ||
           error?.response?.data ||
@@ -276,9 +284,9 @@ const ExperienceForm = ({ data, onChange }) => {
                   rows={5}
                   className="w-full text-sm px-3 py-2 rounded-lg resize-none"
                   placeholder="Describe your key responsibilities and achievements..."
-                  value={experience.jobDescription || ""}
+                  value={(experience.jobDescription || []).join("\n")}
                   onChange={(e) =>
-                    updateExperience(index, "jobDescription", e.target.value)
+                    updateExperience(index, "jobDescription", e.target.value.split("\n").filter((p) => p.trim() !== ""))
                   }
                 />
               </div>

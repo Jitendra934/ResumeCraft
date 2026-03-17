@@ -18,7 +18,7 @@ const ProfessionalSummaryForm = ({ resumeData, onChange, setResumeData }) => {
       });
       // console.log(response);
       // console.log(response.data);
-      setResumeData((prev) => ({ ...prev, aboutMe: response.data.data}));
+      setResumeData((prev) => ({ ...prev, aboutMe: response.data.data }));
     } catch (error) {
       // console.log("AXIOS ERROR:", error);
       // console.log("RESPONSE:", error?.response);
@@ -26,6 +26,10 @@ const ProfessionalSummaryForm = ({ resumeData, onChange, setResumeData }) => {
         toast.error(
           "AI request limit reached. Please wait 15 minutes and try again.",
         );
+        return;
+      }
+      if (error?.response?.status === 503) {
+        toast.error("AI is busy right now. Please retry in a few seconds.");
         return;
       }
       toast.error(
@@ -52,6 +56,10 @@ const ProfessionalSummaryForm = ({ resumeData, onChange, setResumeData }) => {
         toast.error(
           "AI request limit reached. Please wait 15 minutes and try again.",
         );
+        return;
+      }
+      if (error?.response?.status === 503) {
+        toast.error("AI is busy right now. Please retry in a few seconds.");
         return;
       }
       toast.error(
@@ -83,7 +91,7 @@ const ProfessionalSummaryForm = ({ resumeData, onChange, setResumeData }) => {
               <Loader2 className=" size-4 animate-spin" />
             ) : (
               <WandSparkles className="size-4" />
-            )} 
+            )}
             {isGenerating ? "Generating..." : "AI Generate"}
           </button>
           <button
@@ -96,7 +104,7 @@ const ProfessionalSummaryForm = ({ resumeData, onChange, setResumeData }) => {
             ) : (
               <Sparkles className="size-4" />
             )}
-            {isEnhancing ? "Enhancing..." : "AI Enhance"} 
+            {isEnhancing ? "Enhancing..." : "AI Enhance"}
           </button>
         </div>
       </div>

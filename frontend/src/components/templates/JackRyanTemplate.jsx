@@ -139,12 +139,11 @@ const JackRyanTemplate = ({ data, accentColor }) => {
                   </span>
                 </div>
                 <p className="text-sm italic text-gray-800 mb-1">{exp.name}</p>
-                {/* Replaced whitespace-pre-line div with the custom renderer */}
                 {exp.jobDescription && (
-                  <ul className="list-disc list-inside  mt-1 space-y-1 text-sm text-gray-700 leading-relaxed">
-                    {exp.jobDescription.map((bullet, i) => (
-                      <li key={i} className="marker:text-gray-500">
-                        {bullet}
+                  <ul className="list-disc ml-3 text-gray-700 text-sm leading-relaxed">
+                    {exp.jobDescription.map((point, i) => (
+                      <li key={i} className="marker:text-gray-800">
+                        {point}
                       </li>
                     ))}
                   </ul>
@@ -181,20 +180,24 @@ const JackRyanTemplate = ({ data, accentColor }) => {
                   )}
                 </div>
                 {proj.description && (
-                  <ul className="list-disc list-inside  text-sm text-gray-700 leading-relaxed">
-                    {proj.description.map((bullet, i) => (
-                      <li key={i} className="marker:text-gray-500">
-                        {bullet}
+                  <ul className="list-disc ml-3 text-gray-700 text-sm leading-relaxed">
+                    {proj.description.map((point, i) => (
+                      <li key={i} className="marker:text-gray-800">
+                        {point}
                       </li>
                     ))}
                   </ul>
                 )}
                 {proj.techStack && (
-                  <div className="text-xs text-gray-600 mt-1 ml-2">
-                    <span className="font-semibold text-gray-700">
+                  <div className="ml-2 mt-1 text-xs text-gray-600 flex flex-wrap items-center gap-1">
+                    <span className="font-semibold text-gray-700 mr-1">
                       Keywords:
-                    </span>{" "}
-                    {proj.techStack}
+                    </span>
+                    <span>
+                      {Array.isArray(proj.techStack)
+                        ? proj.techStack.join(", ")
+                        : proj.techStack}
+                    </span>
                   </div>
                 )}
               </div>

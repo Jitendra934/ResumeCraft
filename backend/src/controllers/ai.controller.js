@@ -20,9 +20,9 @@ const generateProjectBulletPoints = asyncHandler(async (req, res) => {
     try {
         const { projectTitle, techStack } = req.body;
 
-        if (!projectTitle || !Array.isArray(techStack) || techStack.length === 0) {
-            throw new ApiError(400, "Project title and techStack are required to generate a proper description")
-        }
+        // if (!projectTitle || !Array.isArray(techStack) || techStack.length === 0) {
+        //     throw new ApiError(400, "Project title and techStack are required to generate a proper description")
+        // }
 
         const prompt = `
             You are an expert technical resume writer specializing in ATS-optimized project descriptions.
@@ -90,9 +90,27 @@ const generateProjectBulletPoints = asyncHandler(async (req, res) => {
                 )
             )
     } catch (error) {
-        console.log("Gemini Error: ", error);
-        console.log("Error : ", error.message);
-        throw new ApiError(500, "Failed to generate bullet points")
+        // console.log("Gemini Error: ", error);
+        // console.log("Error : ", error.message);
+        if (error?.message?.includes("429") || error?.message?.includes("quota")) {
+            throw new ApiError(
+                429,
+                "AI quota exceeded. Please try again later."
+            );
+        }
+        if (
+            error?.message?.includes("503") ||
+            error?.message?.toLowerCase().includes("high demand")
+        ) {
+            throw new ApiError(
+                503,
+                "AI service is busy right now. Please try again in a few seconds."
+            );
+        }
+        throw new ApiError(
+            error?.statusCode || 500,
+            error?.message || "Failed to generate bullet points"
+        );
     }
 })
 
@@ -100,9 +118,9 @@ const generateExperienceBulletPoints = asyncHandler(async (req, res) => {
     try {
         const { jobTitle, responsibilities } = req.body;
 
-        if (!jobTitle || !responsibilities) {
-            throw new ApiError(400, "Job title and responsibilities are required to generate a proper description.")
-        }
+        // if (!jobTitle || !responsibilities) {
+        //     throw new ApiError(400, "Job title and responsibilities are required to generate a proper description.")
+        // }
 
         const prompt = `
             You are a professional ATS resume writer and formatter.
@@ -165,12 +183,30 @@ const generateExperienceBulletPoints = asyncHandler(async (req, res) => {
                 )
             )
     } catch (error) {
-        console.error(" DEBUG GEMINI ERROR:", error);
-        console.error(" ERROR MESSAGE:", error?.message);
-        console.error(" ERROR STACK:", error?.stack);
-        console.log("Gemini Error: ", error);
-        console.log("Error : ", error.message);
-        throw new ApiError(500, "Failed to generate bullet points")
+        // console.error(" DEBUG GEMINI ERROR:", error);
+        // console.error(" ERROR MESSAGE:", error?.message);
+        // console.error(" ERROR STACK:", error?.stack);
+        // console.log("Gemini Error: ", error);
+        // console.log("Error : ", error.message);
+        if (error?.message?.includes("429") || error?.message?.includes("quota")) {
+            throw new ApiError(
+                429,
+                "AI quota exceeded. Please try again later."
+            );
+        }
+        if (
+            error?.message?.includes("503") ||
+            error?.message?.toLowerCase().includes("high demand")
+        ) {
+            throw new ApiError(
+                503,
+                "AI service is busy right now. Please try again in a few seconds."
+            );
+        }
+        throw new ApiError(
+            error?.statusCode || 500,
+            error?.message || "Failed to generate bullet points"
+        );
     }
 })
 
@@ -227,9 +263,28 @@ const generateAboutMe = asyncHandler(async (req, res) => {
                 )
             )
     } catch (error) {
-        console.log("Gemini Error: ", error);
-        console.log("Error : ", error.message);
-        throw new ApiError(500, "Failed to generate bullet points")
+        // console.log("Gemini Error: ", error);
+        // console.log("Error : ", error.message);
+        if (error?.message?.includes("429") || error?.message?.includes("quota")) {
+            throw new ApiError(
+                429,
+                "AI quota exceeded. Please try again later."
+            );
+        }
+        // 503 → Server overloaded
+        if (
+            error?.message?.includes("503") ||
+            error?.message?.toLowerCase().includes("high demand")
+        ) {
+            throw new ApiError(
+                503,
+                "AI service is busy right now. Please try again in a few seconds."
+            );
+        }
+        throw new ApiError(
+            error?.statusCode || 500,
+            error?.message || "Failed to generate about Me"
+        );
     }
 })
 
@@ -293,9 +348,27 @@ const enhanceProjectDescription = asyncHandler(async (req, res) => {
                 )
             )
     } catch (error) {
-        console.log("Gemini Error: ", error);
-        console.log("Error : ", error.message);
-        throw new ApiError(500, "Failed to enhance project description")
+        // console.log("Gemini Error: ", error);
+        // console.log("Error : ", error.message);
+        if (error?.message?.includes("429") || error?.message?.includes("quota")) {
+            throw new ApiError(
+                429,
+                "AI quota exceeded. Please try again later."
+            );
+        }
+        if (
+            error?.message?.includes("503") ||
+            error?.message?.toLowerCase().includes("high demand")
+        ) {
+            throw new ApiError(
+                503,
+                "AI service is busy right now. Please try again in a few seconds."
+            );
+        }
+        throw new ApiError(
+            error?.statusCode || 500,
+            error?.message || "Failed to enhance project description"
+        );
     }
 })
 
@@ -365,9 +438,27 @@ const enhanceExperienceDescription = asyncHandler(async (req, res) => {
                 )
             )
     } catch (error) {
-        console.log("Gemini Error: ", error);
-        console.log("Error : ", error.message);
-        throw new ApiError(500, "Failed to enhance experience description")
+        // console.log("Gemini Error: ", error);
+        // console.log("Error : ", error.message);
+        if (error?.message?.includes("429") || error?.message?.includes("quota")) {
+            throw new ApiError(
+                429,
+                "AI quota exceeded. Please try again later."
+            );
+        }
+        if (
+            error?.message?.includes("503") ||
+            error?.message?.toLowerCase().includes("high demand")
+        ) {
+            throw new ApiError(
+                503,
+                "AI service is busy right now. Please try again in a few seconds."
+            );
+        }
+        throw new ApiError(
+            error?.statusCode || 500,
+            error?.message || "Failed to enhance experience description"
+        );
     }
 })
 
@@ -440,9 +531,27 @@ const enhanceAboutMe = asyncHandler(async (req, res) => {
                 )
             )
     } catch (error) {
-        console.log("Gemini Error: ", error);
-        console.log("Error : ", error.message);
-        throw new ApiError(500, "Failed to enhance about me")
+        // console.log("Gemini Error: ", error);
+        // console.log("Error : ", error.message);
+        if (error?.message?.includes("429") || error?.message?.includes("quota")) {
+            throw new ApiError(
+                429,
+                "AI quota exceeded. Please try again later."
+            );
+        }
+        if (
+            error?.message?.includes("503") ||
+            error?.message?.toLowerCase().includes("high demand")
+        ) {
+            throw new ApiError(
+                503,
+                "AI service is busy right now. Please try again in a few seconds."
+            );
+        }
+        throw new ApiError(
+            error?.statusCode || 500,
+            error?.message || "Failed to enhance about Me"
+        );
     }
 })
 

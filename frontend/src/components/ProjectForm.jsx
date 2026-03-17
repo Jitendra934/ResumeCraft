@@ -10,7 +10,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import api from "../configs/api";
 import { useSelector } from "react-redux";
-import { normalizeTextList } from "../configs/normalizeTextList"
+import { normalizeTextList } from "../configs/normalizeTextList";
 
 const ProjectForm = ({ data, onChange }) => {
   const { token } = useSelector((state) => state.auth);
@@ -52,11 +52,14 @@ const ProjectForm = ({ data, onChange }) => {
         techStack: normalizeTextList(project.techStack),
       };
 
-      const response = await api.post(`/ai/enhance-project-description`, payload, {
-        headers: { Authorization: token },
-      });
-      updateProject(index, "description", response.data.data.join("\n"));
-
+      const response = await api.post(
+        `/ai/enhance-project-description`,
+        payload,
+        {
+          headers: { Authorization: token },
+        },
+      );
+      updateProject(index, "description", response.data.data);
     } catch (error) {
       if (error?.response?.status === 429) {
         toast.error(
@@ -64,6 +67,11 @@ const ProjectForm = ({ data, onChange }) => {
         );
         return;
       }
+      if (error?.response?.status === 503) {
+        toast.error("AI is busy right now. Please retry in a few seconds.");
+        return;
+      }
+
       toast.error(
         error?.response?.data?.message ||
           error?.response?.data ||
@@ -76,7 +84,7 @@ const ProjectForm = ({ data, onChange }) => {
 
   const generateProjectDescription = async (index) => {
     try {
-      setGeneratingIndex(index);;
+      setGeneratingIndex(index);
       const project = data[index]; //get the particular project
 
       const payload = {
@@ -90,8 +98,7 @@ const ProjectForm = ({ data, onChange }) => {
 
       // console.log(response);
       // console.log(response.data);
-      updateProject(index, "description", response.data.data.join("\n"))
-
+      updateProject(index, "description", response.data.data);
     } catch (error) {
       // console.log("AXIOS ERROR:", error);
       // console.log("RESPONSE:", error?.response);
@@ -101,13 +108,17 @@ const ProjectForm = ({ data, onChange }) => {
         );
         return;
       }
+      if (error?.response?.status === 503) {
+        toast.error("AI is busy right now. Please retry in a few seconds.");
+        return;
+      }
       toast.error(
         error?.response?.data?.message ||
           error?.response?.data ||
           error.message,
       );
     } finally {
-      setGeneratingIndex(null);;
+      setGeneratingIndex(null);
     }
   };
 
@@ -191,7 +202,9 @@ const ProjectForm = ({ data, onChange }) => {
                   </label>
                   <div className="flex items-center gap-2">
                     <button
-                      disabled={generatingIndex === index || enhancingIndex === index}
+                      disabled={
+                        generatingIndex === index || enhancingIndex === index
+                      }
                       onClick={() => generateProjectDescription(index)}
                       className="flex items-center gap-1 px-2 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50"
                     >
@@ -200,10 +213,14 @@ const ProjectForm = ({ data, onChange }) => {
                       ) : (
                         <WandSparkles className="size-4" />
                       )}
-                      {generatingIndex === index ? "Generating..." : "AI Generate"}
+                      {generatingIndex === index
+                        ? "Generating..."
+                        : "AI Generate"}
                     </button>
                     <button
-                      disabled={enhancingIndex === index || generatingIndex === index}
+                      disabled={
+                        enhancingIndex === index || generatingIndex === index
+                      }
                       onClick={() => enhanceProjectDescription(index)}
                       className="flex items-center gap-1 px-2 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50"
                     >
@@ -220,9 +237,13 @@ const ProjectForm = ({ data, onChange }) => {
                   rows={5}
                   className="w-full text-sm px-3 py-2 rounded-lg resize-none"
                   placeholder="Describe your project..."
-                  value={project.description || ""}
+                  value={(project.description || []).join("\n")}
                   onChange={(e) =>
-                    updateProject(index, "description", e.target.value)
+                    updateProject(
+                      index,
+                      "description",
+                      e.target.value.split("\n").filter((p) => p.trim() !== ""),
+                    )
                   }
                 />
               </div>

@@ -24,7 +24,7 @@ const resumeSchema = new mongoose.Schema(
 
         accent_color: {
             type: String,
-            default: "#3B82F6"
+            default: "#4B5563"
         },
 
         personalInfo: {

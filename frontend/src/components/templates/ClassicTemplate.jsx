@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Linkedin, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin } from "lucide-react";
 
 const ClassicTemplate = ({ data, accentColor }) => {
   const formatDate = (dateStr) => {
@@ -112,13 +112,13 @@ const ClassicTemplate = ({ data, accentColor }) => {
                   </div>
                 </div>
                 {exp.jobDescription && (
-                  <ul className="list-disc list-inside  text-sm text-gray-700 leading-relaxed">
-                      {exp.jobDescription.map((bullet, i) => (
-                        <li key={i} className="marker:text-gray-500">
-                          {bullet}
-                        </li>
-                      ))}
-                    </ul>
+                  <ul className="list-disc ml-3 text-gray-700 text-sm leading-relaxed">
+                    {exp.jobDescription.map((point, i) => (
+                      <li key={i} className="marker:text-gray-800">
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
                 )}
               </div>
             ))}
@@ -159,10 +159,10 @@ const ClassicTemplate = ({ data, accentColor }) => {
                     )}
                   </p>
                   {proj.description && (
-                    <ul className="list-disc list-inside  text-sm text-gray-700 leading-relaxed">
-                      {proj.description.map((bullet, i) => (
-                        <li key={i} className="marker:text-gray-500">
-                          {bullet}
+                    <ul className="list-disc ml-3 text-gray-700 text-sm leading-relaxed">
+                      {proj.description.map((point, i) => (
+                        <li key={i} className="marker:text-gray-800">
+                          {point}
                         </li>
                       ))}
                     </ul>

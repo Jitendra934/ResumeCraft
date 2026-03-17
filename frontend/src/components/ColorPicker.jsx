@@ -11,7 +11,7 @@ const ColorPicker = ({ onChange, selectedColor }) => {
     { name: "Orange", value: "#F97316" },
     { name: "Teal", value: "#14B8A6" },
     { name: "Pink", value: "#EC4899" },
-    { name: "Gray", value: "#6B7280" },
+    { name: "Gray", value: "#4B5563" },
     { name: "Black", value: "#1F2937" },
 
     { name: "Cyan", value: "#06B6D4" },

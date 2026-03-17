@@ -170,10 +170,10 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                       {exp.name}
                     </p>
                     {exp.jobDescription && (
-                      <ul className="list-disc list-inside text-sm text-gray-700 leading-relaxed">
-                        {exp.jobDescription.map((bullet, i) => (
-                          <li key={i} className="marker:text-gray-500">
-                            {bullet}
+                      <ul className="list-disc ml-3 text-gray-700 text-sm leading-relaxed">
+                        {exp.jobDescription.map((point, i) => (
+                          <li key={i} className="marker:text-gray-800">
+                            {point}
                           </li>
                         ))}
                       </ul>
@@ -212,10 +212,10 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                       )}
                     </p>
                     {project.description && (
-                      <ul className="list-disc list-inside text-sm text-gray-700 leading-relaxed">
-                        {project.description.map((bullet, i) => (
-                          <li key={i} className="marker:text-gray-500">
-                            {bullet}
+                      <ul className="list-disc ml-3 text-gray-700 text-sm leading-relaxed">
+                        {project.description.map((point, i) => (
+                          <li key={i} className="marker:text-gray-800">
+                            {point}
                           </li>
                         ))}
                       </ul>
