@@ -139,7 +139,7 @@ const updateResume = asyncHandler(async (req, res) => {
           (removeBackground ? ",e-bgremove" : ""),
       },
     });
-
+    fs.unlinkSync(image.path);
     updateData.personalInfo = {};
     updateData.personalInfo.image = response.url;
   }
