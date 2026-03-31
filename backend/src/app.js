@@ -4,14 +4,26 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 app.use(express.json()) // express.json parses incoming requests with JSON payloads.
 app.use(express.urlencoded({ extended: true })) // express.urlencoded parses incoming requests with URL - encoded payloads.
 app.use(express.static("public")) // express.static serves static assets such as HTML files, images, and so on.
 app.use(cookieParser())
+
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  "http://localhost:5173"
+].filter(Boolean);
+
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: allowedOrigins,
     credentials: true
 }))
+
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
 
 import userRouter from "./routes/user.routes.js"
 import resumeRouter from "./routes/resume.routes.js"
