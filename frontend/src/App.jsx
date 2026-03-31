@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Layout from "./pages/Layout";
@@ -12,6 +12,7 @@ import {Toaster} from 'react-hot-toast';
 
 const App = () => {
   const dispatch = useDispatch();
+  const [isWakingUp, setIsWakingUp] = useState(false);
 
   const getUserData = async () => {
     const token = localStorage.getItem("accessToken");
@@ -40,9 +41,32 @@ const App = () => {
   useEffect(() => {
     getUserData();
   }, [])
+
+  useEffect(() => {
+    const handleWake = () => setIsWakingUp(true);
+    const handleAwake = () => setIsWakingUp(false);
+
+    window.addEventListener("server-waking", handleWake);
+    window.addEventListener("server-awake", handleAwake);
+
+    return () => {
+      window.removeEventListener("server-waking", handleWake);
+      window.removeEventListener("server-awake", handleAwake);
+    };
+  }, []);
+
   return (
     <>
     <Toaster />
+
+    {isWakingUp && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-999 
+        bg-white border shadow-lg px-4 py-2 rounded-full text-sm flex items-center gap-2">
+          <span className="animate-pulse">⚡</span>
+          Server waking up... please wait a few seconds
+        </div>
+      )}
+
       <Routes>
         <Route path="/" element={<Home />} />
 
