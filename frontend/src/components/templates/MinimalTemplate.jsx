@@ -10,6 +10,9 @@ const MinimalTemplate = ({ data, accentColor }) => {
 
   return (
     <div className="max-w-4xl mx-auto p-5 bg-white text-gray-900 font-light">
+      <div style={{ fontSize: "1px", opacity: 0 }}>
+        RESUME_CRAFT_ID:{data._id}
+      </div>
       {/* Header */}
       <header className="mb-2.5">
         <h1 className="text-4xl font-thin mb-2 tracking-wide">
@@ -53,7 +56,10 @@ const MinimalTemplate = ({ data, accentColor }) => {
           >
             Professional Summary
           </h2>
-          <p className=" text-gray-700 text-sm text-justify whitespace-pre-line">
+          <p
+            className=" text-gray-700 text-sm whitespace-pre-line"
+            style={{ textAlign: "justify", textJustify: "inter-word" }}
+          >
             {data.aboutMe}
           </p>
         </section>

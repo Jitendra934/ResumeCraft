@@ -12,6 +12,9 @@ const ClassicTemplate = ({ data, accentColor }) => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white text-gray-800 leading-relaxed">
+      <div style={{ fontSize: "1px", opacity: 0 }}>
+        RESUME_CRAFT_ID:{data._id}
+      </div>
       {/* Header */}
       <header
         className="text-center mb-2 pb-2 border-b-2"
@@ -72,7 +75,10 @@ const ClassicTemplate = ({ data, accentColor }) => {
           >
             PROFESSIONAL SUMMARY
           </h2>
-          <p className="text-gray-700 text-sm leading-relaxed">
+          <p
+            className="text-gray-700 text-sm leading-relaxed"
+            style={{ textAlign: "justify", textJustify: "inter-word" }}
+          >
             {data.aboutMe}
           </p>
         </section>
@@ -114,7 +120,14 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 {exp.jobDescription && (
                   <ul className="list-disc ml-3 text-gray-700 text-sm leading-relaxed">
                     {exp.jobDescription.map((point, i) => (
-                      <li key={i} className="marker:text-gray-800">
+                      <li
+                        key={i}
+                        className="marker:text-gray-800"
+                        style={{
+                          textAlign: "justify",
+                          textJustify: "inter-word",
+                        }}
+                      >
                         {point}
                       </li>
                     ))}

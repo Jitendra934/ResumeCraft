@@ -12,12 +12,15 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
 
   return (
     <div className="max-w-5xl mx-auto bg-white text-zinc-800">
+      <div style={{ fontSize: "1px", opacity: 0 }}>
+        RESUME_CRAFT_ID:{data._id}
+      </div>
       <div className="grid grid-cols-3">
-        <div className="col-span-1  py-6">
+        <div className="col-span-1  py-4">
           {/* Image */}
           {data.personalInfo?.image &&
           typeof data.personalInfo.image === "string" ? (
-            <div className="mb-6">
+            <div className="mb-2">
               <img
                 src={data.personalInfo.image}
                 alt="Profile"
@@ -27,7 +30,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
             </div>
           ) : data.personalInfo?.image &&
             typeof data.personalInfo.image === "object" ? (
-            <div className="mb-6">
+            <div className="mb-2">
               <img
                 src={URL.createObjectURL(data.personalInfo.image)}
                 alt="Profile"
@@ -38,7 +41,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
         </div>
 
         {/* Name */}
-        <div className="col-span-2 flex flex-col justify-center py-6 px-8">
+        <div className="col-span-2 flex flex-col justify-center py-4 px-8">
           <h1 className="text-4xl font-bold text-zinc-700 tracking-widest">
             {data.personalInfo?.fullName || "Your Name"}
           </h1>
@@ -47,7 +50,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
         {/* Left Sidebar */}
         <aside className="col-span-1 border-r border-zinc-400 p-6 pt-0">
           {/* Contact */}
-          <section className="mb-6">
+          <section className="mb-2">
             <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
               CONTACT
             </h2>
@@ -95,7 +98,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
 
           {/* Education */}
           {data.education && data.education.length > 0 && (
-            <section className="mb-4">
+            <section className="mb-2">
               <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
                 EDUCATION
               </h2>
@@ -139,7 +142,12 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
               >
                 SUMMARY
               </h2>
-              <p className="text-zinc-700 leading-relaxed">{data.aboutMe}</p>
+              <p
+                className="text-sm text-zinc-700 leading-snug"
+                style={{ textAlign: "justify", textJustify: "inter-word" }}
+              >
+                {data.aboutMe}
+              </p>
             </section>
           )}
 
@@ -170,9 +178,16 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                       {exp.name}
                     </p>
                     {exp.jobDescription && (
-                      <ul className="list-disc ml-3 text-gray-700 text-sm leading-relaxed">
+                      <ul className="list-disc ml-3 text-gray-700 text-sm leading-snug">
                         {exp.jobDescription.map((point, i) => (
-                          <li key={i} className="marker:text-gray-800">
+                          <li
+                            key={i}
+                            className="marker:text-gray-800"
+                            style={{
+                              textAlign: "justify",
+                              textJustify: "inter-word",
+                            }}
+                          >
                             {point}
                           </li>
                         ))}
@@ -212,9 +227,16 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                       )}
                     </p>
                     {project.description && (
-                      <ul className="list-disc ml-3 text-gray-700 text-sm leading-relaxed">
+                      <ul className="list-disc ml-3 text-gray-700 text-sm leading-snug">
                         {project.description.map((point, i) => (
-                          <li key={i} className="marker:text-gray-800">
+                          <li
+                            key={i}
+                            className="marker:text-gray-800"
+                            style={{
+                              textAlign: "justify",
+                              textJustify: "inter-word",
+                            }}
+                          >
                             {point}
                           </li>
                         ))}

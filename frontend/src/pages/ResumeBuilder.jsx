@@ -23,6 +23,7 @@ import ProjectForm from "../components/ProjectForm";
 import SkillsForm from "../components/SkillsForm";
 import { useSelector } from "react-redux";
 import api from "../configs/api";
+import { renderTemplateToHTML } from "../configs/renderTemplateToHTML";
 import toast from "react-hot-toast";
 
 const ResumeBuilder = () => {
@@ -44,6 +45,7 @@ const ResumeBuilder = () => {
 
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
   const [removeBackground, setRemoveBackground] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const sections = [
     { id: "personal", name: "Personal Info", icon: User },
@@ -109,8 +111,33 @@ const ResumeBuilder = () => {
     }
   };
 
-  const downloadResume = () => {
-    window.print();
+  const downloadResume = async () => {
+    try {
+      setIsDownloading(true);
+      const html = renderTemplateToHTML(resumeData, resumeData.template, resumeData.accent_color);
+
+      const response = await api.post('/pdf/generate-pdf', { html }, {
+        responseType: 'blob',
+        headers: { Authorization: token }
+      });
+
+      const url = URL.createObjectURL(new Blob([response.data]));
+      const fileName = `${resumeData.title || "resume"}.pdf`;
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute("download", fileName);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      toast.success('Resume downloaded successfully!');
+    } catch (error) {
+      console.error('Download error:', error);
+      toast.error('Failed to download resume');
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
 
@@ -275,10 +302,11 @@ const ResumeBuilder = () => {
               <div className="absolute bottom-3 left-0 right-0 flex items-center justify-end gap-2">
                 <button
                   onClick={downloadResume}
-                  className="flex items-center gap-2 px-6 py-2 text-xs bg-linear-to-br from-indigo-200 to to-purple-200 text-indigo-600 rounded-lg ring-indigo-300 hover:ring transition-colors"
+                   disabled={isDownloading}
+                  className="flex items-center gap-2 px-6 py-2 text-sm bg-linear-to-br from-indigo-200 to to-purple-200 text-indigo-600 rounded-lg ring-indigo-300 hover:ring transition-colors"
                 >
                   <DownloadIcon className="size-4" />
-                  Download
+                   {isDownloading ? "Generating PDF..." : "Download Resume"}
                 </button>
               </div>
             </div>

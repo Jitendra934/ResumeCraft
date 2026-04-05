@@ -59,6 +59,17 @@ const Dashboard = () => {
     setIsLoading(true);
     try {
       const resumeText = await pdfToText(resume);
+      // console.log("RESUME TEXT : ", resumeText);
+      const match = resumeText.match(/RESUME_CRAFT_ID:(\w+)/);
+
+      if (match) {
+        const resumeId = match[1];
+
+        // Directly navigate (skip AI)
+        navigate(`/app/builder/${resumeId}`);
+        return;
+      }
+
       const { data } = await api.post(
         "/ai/upload-resume",
         { title, resumeText },
@@ -69,8 +80,8 @@ const Dashboard = () => {
       setShowUploadResume(false);
       navigate(`/app/builder/${data.data._id}`);
     } catch (error) {
-       console.log("AXIOS ERROR:", error);
-       console.log("RESPONSE:", error?.response);
+      console.log("AXIOS ERROR:", error);
+      console.log("RESPONSE:", error?.response);
       toast.error(
         error?.response?.data?.message ||
           error?.response?.data ||

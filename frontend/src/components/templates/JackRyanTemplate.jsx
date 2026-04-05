@@ -13,6 +13,7 @@ const JackRyanTemplate = ({ data, accentColor }) => {
 
   return (
     <div className="max-w-4xl mx-auto p-5 bg-white text-gray-900 font-sans">
+      <div style={{ fontSize: "1px", opacity: 0 }}>RESUME_CRAFT_ID:{data._id}</div>
       {/* Header */}
       <header
         className="text-center pb-3 mb-3"
@@ -78,7 +79,7 @@ const JackRyanTemplate = ({ data, accentColor }) => {
           >
             Professional Summary
           </h2>
-          <p className="text-sm leading-relaxed text-justify whitespace-pre-line">
+          <p className="text-sm leading-relaxed whitespace-pre-line" style={{ textAlign: "justify", textJustify: "inter-word" }}>
             {data.aboutMe}
           </p>
         </section>

@@ -12,6 +12,9 @@ const ModernTemplate = ({ data, accentColor }) => {
 
   return (
     <div className="max-w-4xl mx-auto bg-white text-gray-800">
+      <div style={{ fontSize: "1px", opacity: 0 }}>
+        RESUME_CRAFT_ID:{data._id}
+      </div>
       {/* Header */}
       <header
         className="p-6 text-white"
@@ -69,7 +72,12 @@ const ModernTemplate = ({ data, accentColor }) => {
             <h2 className="text-2xl font-light mb-2 pb-1 border-b border-gray-200">
               Professional Summary
             </h2>
-            <p className="text-gray-700 text-sm">{data.aboutMe}</p>
+            <p
+              className="text-gray-700 text-sm"
+              style={{ textAlign: "justify", textJustify: "inter-word" }}
+            >
+              {data.aboutMe}
+            </p>
           </section>
         )}
 
