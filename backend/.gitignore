@@ -141,7 +141,7 @@ vite.config.ts.timestamp-*
 .vite/
 
 
-
+.cache/puppeteer
 
 
 backend/public/my-uploads/
